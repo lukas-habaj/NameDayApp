@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNamesTable extends Migration
+class CreateNameDaysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateNamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('names', function (Blueprint $table) {
+        Schema::create('name_days', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);
             $table->string('month_day', 4);
-            $table->timestamps();
 
             $table->unique('name');
             $table->index('month_day');
