@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\NameDay;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\View;
 
 class NameDayController extends Controller
 {
@@ -14,11 +14,12 @@ class NameDayController extends Controller
      *
      * @var NameDay
      */
-    private $nameDay;
+    private NameDay $nameDay;
 
     public function __construct()
     {
         $this->nameDay = new NameDay();
+        View::share( 'allNames', $this->nameDay->getAllNames());
     }
 
     /**
@@ -26,10 +27,10 @@ class NameDayController extends Controller
      *
      * @return object
      */
-    public function index()
+    public function index(): object
     {
         $todaysNamesWithCount = $this->nameDay->getTodaysNames();
-        $dayOfWeekName = NameDay::DAYS_OF_WEEK[date('N')];
+        $dayOfWeekName = NameDay::DAYS_OF_WEEK[date('N') - 1];
 
         return view('name_day.index', compact('todaysNamesWithCount', 'dayOfWeekName'));
     }
@@ -58,21 +59,23 @@ class NameDayController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Name $name
-     * @return Response
+     * @param string $name
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(Name $name)
+    public function show(string $name)
     {
-        return view('name.show');
+        $nameData = $this->nameDay->getByName($name);
+
+        return view('name_day.show', compact('nameData'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Name $name
+     * @param NameDay $nameDay
      * @return Response
      */
-    public function edit(Name $name)
+    public function edit(NameDay $nameDay)
     {
         //
     }
@@ -81,10 +84,10 @@ class NameDayController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param Name $name
+     * @param NameDay $nameDay
      * @return Response
      */
-    public function update(Request $request, Name $name)
+    public function update(Request $request, NameDay $nameDay)
     {
         //
     }
@@ -92,11 +95,24 @@ class NameDayController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Name $name
+     * @param NameDay $nameDay
      * @return Response
      */
-    public function destroy(Name $name)
+    public function destroy(NameDay $nameDay)
     {
         //
     }
+
+    /**
+     * Vyhlada v databaze mena vyhovujuce query z ajax requestu
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function nameSearch(Request $request)
+    {
+        return NameDay::where('name', 'like', '%' . $request->query('q') . '%')->pluck('name')->toArray();
+    }
+
+
 }

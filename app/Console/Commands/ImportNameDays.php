@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use App\Models\NameDay;
+use Illuminate\Support\Facades\Cache;
 
 class ImportNameDays extends Command
 {
@@ -140,6 +141,7 @@ class ImportNameDays extends Command
             try {
                 DB::table('name_days')->truncate();
                 NameDay::insert($nameDayArr);
+                Cache::forget('all_names');
             } catch (\Exception $e) {
                 echo $e->getMessage();
                 return 4;

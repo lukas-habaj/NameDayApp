@@ -13,4 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/names', 'App\Http\Controllers\NameDayController@index');
+Route::get('/', 'App\Http\Controllers\NameDayController@index');
+Route::get('/namedays', 'App\Http\Controllers\NameDayController@index');
+Route::get('/namedays/{name}', 'App\Http\Controllers\NameDayController@show');
+//Route::get('/name_search', 'App\Http\Controllers\NameDayController@nameSearch'); // for ajax version of autocomplete
+
