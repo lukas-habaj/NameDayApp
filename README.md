@@ -1,62 +1,59 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Spustenie aplikácie
+V tomto návode pre názov aplikácie použijeme NameDayApp. Ak pre aplikáciu na miesto NameDayApp použijete iný názov, 
+všetky výskyty NameDayApp v tomto návode si nahraďte vašim názvom.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Pre beh aplikácie je nutné mať nainštalovaný web server (Apache, Nginx) s PHP 7.2+ a databázou MySQL.
 
-## About Laravel
+Je nutné mať nainšatolvaný php composer. Postup nájdete v dokumentácii: https://getcomposer.org/doc/00-intro.md
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Tento návod predpokladá, že vo vašom web serveri máte vytvorený virtual host s referenciou na adresár aplikácie 
+NameDayApp, prístupný z web prehliadača na url podľa vášho výberu.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. ### Naklonujte repozitár z github 
+    V termináli sa nastavte do adresára, kde chcete mat túto aplikáciu a spustite príkaz:
+   
+        git clone https://github.com/lukas-habaj/NameDayApp.git NameDayApp
+    
+    Vytvorí sa nový adresár NameDayApp s obsahom repozitára.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2. ### Doinštalujte závislosti pomocou composera
+    V termináli sa nastavte do adresára NameDayApp a spustite príkaz
+        
+        composer install
 
-## Learning Laravel
+    Počkajte, kým composer dokončí inštaláciu. Trvá to max. 5 minút.
+   
+3. ### Lokálne prostredie
+    - premenujte súbor NameDayApp/.env.example na NameDayApp/.env
+    
+    - zmete hodnotu premennej APP_URL na url, na ktorej je dostupny virtual host tejto aplikácie, napr.:
+        
+            APP_URL=http://namedayapp.localhost
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    - vygenerovanie šifrovacieho kľúča - v termináli, v adresári NameDayApp spustite príkaz:
+        
+            php artisan key:generate
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    - vo vašej MySQL databáze si vytvorte novú databázu pre NameDay aplikáciu.
+    
+    - v NameDayApp/.env si nastavte hodnoty premenných začínajúcich DB_ podľa prístupových údajov k vašej databáze. 
+      Pravdepodobne budete musiet zmenit iba
 
-## Laravel Sponsors
+            DB_DATABASE=name_day_app
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+      kde name_day_app je názov databázy. Nahraďte ho vaším názvom.
 
-### Premium Partners
+4. ### Migrácie a import mien
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+    - v termináli sa nastavte do adresára aplikácie NameDayApp a spustite príkaz
+    
+            php artisan migrate
+    
+    - teraz by ste už aplikáciu mali vedieť zobrazit v prehliadači
+    
+    - ďalej treba spustiť príkaz na import mien do databázy; trvá to asi 2 minuty
+    
+            php artisan name-days:update
+    
+    - s importovanými dátami by už aplikácia mala byť plne funkčná
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
