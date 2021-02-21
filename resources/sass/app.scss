@@ -6,3 +6,98 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// Custom styles
+html, body {
+    height: 100%;
+}
+.header {
+    background-color: #95c5ed;
+
+    .container {
+        display: flex;
+
+        & > * {
+            display: flex;
+            justify-content: flex-end;
+            align-self: center;
+            height: 40px;
+        }
+    }
+
+    .top-menu {
+        ul {
+            list-style: none;
+            margin: 0;
+
+            li {
+                height: 100%;
+
+                a {
+                    height: 100%;
+                    display: flex;
+                    text-decoration: none;
+                    padding: 0 5px;
+                    color: #ffffff;
+
+                    &:hover {
+                        background-color: #b7d6f1;
+                    }
+
+                    span {
+                        align-self: center;
+                    }
+                }
+            }
+        }
+    }
+    .search {
+        input {
+            align-self: center;
+            min-width: 115px;
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .header {
+        .container {
+            display: block;
+        }
+    }
+    .main {
+        height: calc(100% - 80px);
+    }
+}
+
+.main {
+    height: calc(100% - 40px);
+    background-image: linear-gradient(to right, #0051cc, #00a3f1);
+
+    .container {
+        height: 100%;
+        background: #ffffff2e;
+
+        & > * {
+            height: 100%;
+        }
+
+        .info-box-wrapper {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .info-box {
+                width: 95%;
+                max-width: 400px;
+                background: #fff;
+                text-align: center;
+                font-size: 1.5rem;
+            }
+        }
+
+    }
+}
+
+

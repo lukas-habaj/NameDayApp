@@ -8,10 +8,13 @@
 
     <link href="/css/app.css" rel="stylesheet">
 </head>
-<body class="antialiased">
-    @yield('header')
+<body>
+    @include('partials.top_panel')
+    <section class="main">
     @yield('main')
+    </section>
 
     <script src="/js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.js"></script>
 </body>
 </html>

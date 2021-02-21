@@ -8,7 +8,7 @@ function urlifyString(str)
 $(function(){
 
     // ###### ajax solution start ######
-    // default ajax solution - less code but worse UX
+    // Less code but slower - worse UX
     // $('#search').autoComplete({
     //     autoSelect: false
     // });
@@ -16,7 +16,8 @@ $(function(){
 
 
     // ###### no-ajax solution start ######
-    // faster, so I'm going with it
+    // Using it, because it's faster and the data collection of names is not too large.
+    // For large collections I'd use ajax solution
     var allNames = $('#search').data('all-names');
     var allNamesUrlified = [];
 
@@ -26,6 +27,7 @@ $(function(){
 
     $('#search').autoComplete({
         autoSelect: false,
+        minLength: 2,
         resolver: 'custom',
         events: {
             search: function (qry, callback) {
